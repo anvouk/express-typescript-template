@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "newLine": "lf",
+    "esModuleInterop": true,
+    "target": "ES6",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": false,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": false,
+    "suppressExcessPropertyErrors": true
+  },
+  "include": [
+    "src/*.ts",
+    "src/*.js"
+  ],
+  "exclude": [
+    "src/*.spec.ts",
+    "src/*.spec.js"
+  ]
+}
