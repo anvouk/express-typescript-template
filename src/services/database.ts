@@ -4,10 +4,7 @@ import { createSubLogger } from '../logger';
 
 const logger = createSubLogger('database');
 
-const pgPool = new pg.Pool({
-  ...constants.database,
-  max: 10,
-});
+const pgPool = new pg.Pool(constants.database);
 
 pgPool.on('error', (err, client) => {
   logger.error(err, 'pg pool error');
