@@ -4,7 +4,7 @@ import { createSubLogger } from '../logger';
 
 const logger = createSubLogger('redis');
 
-const redisClient: IORedis.Redis = new IORedis({
+const redisClient: IORedis = new IORedis({
   ...constants.redis,
 });
 
