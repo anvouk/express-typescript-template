@@ -49,13 +49,9 @@ export class HttpResourceAlreadyExists extends HttpError {
 export function endpointNotFound(req: Request, res: Response) {
   res.format({
     'text/html': () => res.status(404).send(`<html lang="en"><h1>Error 404: Endpoint not found</h1></html>`),
-    'application/json': () =>
-      res.status(404).json({
-        error: {
-          status: 404,
-          message: 'Endpoint not found',
-        },
-      }),
+    'application/json': () => {
+      throw new HttpResourceNotFound('Endpoint not found');
+    },
   });
 }
 
