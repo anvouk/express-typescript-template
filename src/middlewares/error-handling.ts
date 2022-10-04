@@ -69,9 +69,9 @@ export function errorHandler(err: any, req: Request, res: Response, next: NextFu
     return next(err);
   }
 
-  // obscure error message for unhandled exceptions in prod.
-  if (process.env.NODE_ENV === 'production' && statusCode === 500) {
-    errorMsg = 'Internal Server Error';
+  // obscure error messages in prod.
+  if (process.env.NODE_ENV === 'production') {
+    errorMsg = undefined;
   }
 
   return res.status(statusCode).json({
