@@ -1,4 +1,4 @@
-import constants from './constants';
+import { SERVER_PORT } from './constants';
 import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -37,11 +37,11 @@ app.use(endpointNotFound);
 app.use(errorHandler);
 
 const server = createServer(app);
-server.listen(constants.server.port, async () => {
+server.listen(SERVER_PORT, async () => {
   if (process.env.NODE_ENV === 'production') {
-    logger.info(`server listening on port: ${constants.server.port}`);
+    logger.info(`server listening on port: ${SERVER_PORT}`);
   } else {
-    logger.info(`development server listening at http://localhost:${constants.server.port}`);
+    logger.info(`development server listening at http://localhost:${SERVER_PORT}`);
   }
 });
 

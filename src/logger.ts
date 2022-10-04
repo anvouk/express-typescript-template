@@ -1,10 +1,10 @@
 import bunyan from 'bunyan';
-import constants from './constants';
+import { LOG_LEVEL } from './constants';
 
 export function createSubLogger(name: string): bunyan {
   return bunyan.createLogger({
     name: name,
-    level: process.env.NODE_ENV !== 'test' ? constants.logging.level : 'fatal',
+    level: process.env.NODE_ENV !== 'test' ? LOG_LEVEL : 'fatal',
     src: process.env.NODE_ENV !== 'development',
   });
 }
