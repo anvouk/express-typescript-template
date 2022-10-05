@@ -6,11 +6,11 @@ WORKDIR /build
 COPY package.json package-lock.json tsconfig.json ./
 
 # first set aside prod dependencies so we can copy in to the prod image
-RUN npm ci --only=prod
+RUN npm ci --only=prod --ignore-scripts
 RUN cp -R node_modules /tmp/node_modules
 
 # install all dependencies and add source code
-RUN npm install
+RUN npm install --ignore-scripts
 COPY . .
 
 RUN npm run build
