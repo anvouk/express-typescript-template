@@ -1,4 +1,4 @@
-ARG NODE_VERSION=node:16-alpine
+ARG NODE_VERSION=node:18-alpine
 
 FROM ${NODE_VERSION} AS builder
 
