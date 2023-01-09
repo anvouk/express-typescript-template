@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
-import { LogLevelString } from 'bunyan';
+import pino from "pino";
 
 dotenv.config();
 
 process.env.NODE_ENV ??= 'production';
 
-export const LOG_LEVEL: LogLevelString = (process.env.LOG_LEVEL as LogLevelString) || 'info';
+export const LOG_LEVEL: pino.Level = (process.env.LOG_LEVEL as pino.Level) || 'info';
 
 export const APP_NAME: string = process.env.npm_package_name || 'my_awesome_node_backed';
 
