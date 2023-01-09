@@ -45,12 +45,20 @@ server.listen(SERVER_PORT, async () => {
   }
 });
 
-process.on('SIGTERM', async () => {
-  server.close(async (err) => {
-    if (err) {
-      logger.warn({ error: err }, 'server closed with errors');
-    }
+async function shutdownHook() {
+  try {
+    await new Promise<void>((resolve, reject) => server.close((err) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve();
+    }));
+  } catch (err) {
+    logger.warn({ error: err }, 'server closed with errors');
+  } finally {
     redisClient.disconnect();
-    process.exit(0);
-  });
-});
+  }
+}
+
+process.on('SIGINT', shutdownHook);
+process.on('SIGTERM', shutdownHook);
