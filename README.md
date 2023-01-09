@@ -8,7 +8,7 @@ Personal NodeJS template for express webapis.
 - Full typings everywhere
 - Sensible `tsconfig.json`
 - Error handling
-- Logging (bunyan)
+- JSON Logging (pino) with pretty print during dev
 - Docker support (both `Yarn` and `NPM`)
 - Express routing
 - Controllers/Services/Routes structure
@@ -20,6 +20,6 @@ Personal NodeJS template for express webapis.
 - Basic auth guard system
 - Postgres-ready (no ORMs)
 - Redis-ready
-- SIGTERM intercept for cleaner and faster shutdowns
+- SIGTERM, SIGINT intercept for cleaner and faster shutdowns
 - HTTP validation (express-validator)
 - EditorConfig support
