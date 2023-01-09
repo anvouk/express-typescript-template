@@ -24,4 +24,4 @@ COPY --from=builder /build/package.json ./
 
 ENV NODE_ENV=production
 
-CMD ["node", "."]
+ENTRYPOINT ["node", "."]
