@@ -23,3 +23,4 @@ Personal NodeJS template for express webapis.
 - SIGTERM, SIGINT intercept for cleaner and faster shutdowns
 - HTTP validation (express-validator)
 - EditorConfig support
+- Very fast and optimized build with [esbuild](https://esbuild.github.io/)
