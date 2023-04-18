@@ -19,8 +19,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedParameters": false,
-    "suppressExcessPropertyErrors": true
+    "noUnusedParameters": false
   },
   "include": [
     "src/*.ts",

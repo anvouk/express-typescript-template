@@ -1,10 +1,15 @@
-import bunyan from 'bunyan';
+import pino from 'pino';
 import { LOG_LEVEL } from './constants';
 
-export function createSubLogger(name: string): bunyan {
-  return bunyan.createLogger({
+const root = pino({
+  level: LOG_LEVEL,
+  enabled: process.env.NODE_ENV !== 'test',
+}, pino.destination({
+  sync: false,
+}));
+
+export function createSubLogger(name: string): pino.Logger {
+  return root.child({
     name: name,
-    level: process.env.NODE_ENV !== 'test' ? LOG_LEVEL : 'fatal',
-    src: process.env.NODE_ENV !== 'development',
   });
 }
