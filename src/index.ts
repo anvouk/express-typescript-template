@@ -47,12 +47,14 @@ server.listen(SERVER_PORT, async () => {
 
 async function shutdownHook() {
   try {
-    await new Promise<void>((resolve, reject) => server.close((err) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve();
-    }));
+    await new Promise<void>((resolve, reject) => {
+      server.close((err) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve();
+      });
+    });
   } catch (err) {
     logger.warn({ error: err }, 'server closed with errors');
   } finally {
