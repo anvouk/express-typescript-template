@@ -20,4 +20,4 @@ WORKDIR /app
 
 COPY --from=builder /build/dist .
 
-ENTRYPOINT ["node", "/app/index.js"]
+ENTRYPOINT ["node", "--enable-source-maps", "/app/index.js"]
