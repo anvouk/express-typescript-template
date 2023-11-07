@@ -1,22 +1,20 @@
-ARG NODE_VERSION=18
-ARG ALPINE_VERSION=3.17
+ARG NODE_VERSION=20
+ARG ALPINE_VERSION=3.18
 
 FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS builder
 
 WORKDIR /build
-COPY package.json yarn.lock tsconfig.json ./
+COPY package.json package-lock.json tsconfig.json ./
 
 # first set aside prod dependencies so we can copy in to the prod image
-RUN yarn install --frozen-lockfile --non-interactive --ignore-scripts
+RUN npm ci --ignore-scripts
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 # release includes bare minimum required to run the app, copied from builder
-FROM alpine:${ALPINE_VERSION}
-
-RUN apk add --no-cache nodejs
+FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION}
 
 WORKDIR /app
 
