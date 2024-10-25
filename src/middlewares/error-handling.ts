@@ -58,7 +58,7 @@ export function endpointNotFound(req: Request, res: Response) {
   });
 }
 
-export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
+export function errorHandler(err: any, req: Request, res: any, next: NextFunction) {
   const statusCode = err.status || 500;
   let errorMsg = err.message || 'Internal Server Error';
   if (statusCode === 500) {

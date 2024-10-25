@@ -3,7 +3,6 @@ import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
-import compression from 'compression';
 import { createServer } from 'http';
 import { createSubLogger } from './logger';
 import { endpointNotFound, errorHandler } from './middlewares/error-handling';
@@ -15,7 +14,6 @@ const app: Express = express();
 const logger = createSubLogger('app');
 
 app.use(cors());
-app.use(compression());
 app.use(helmet());
 app.use(express.json());
 
