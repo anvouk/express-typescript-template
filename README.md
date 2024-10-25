@@ -15,7 +15,7 @@ Personal NodeJS template for express webapis.
 - Development HotReload (ts-node-dev)
 - Unit testing (jest with `*.spec.ts` files)
 - [Volta](https://volta.sh/) support
-- Automatic files formatting on-commit with sensible defaults (prettier/pretty-quick/husky)
+- Automatic files formatting on-commit with sensible defaults (prettier/pretty-quick/simple-git-hooks)
 - Express common middlewares included (morgan, etc)
 - Basic auth guard system
 - Postgres-ready (no ORMs)
