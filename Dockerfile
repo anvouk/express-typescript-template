@@ -1,12 +1,10 @@
-ARG NODE_VERSION=20
-ARG ALPINE_VERSION=3.20
+FROM node:22-alpine AS base
 
-FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS builder
+FROM base AS builder
 
 WORKDIR /build
 COPY package.json package-lock.json tsconfig.json ./
 
-# first set aside prod dependencies so we can copy in to the prod image
 RUN npm ci --ignore-scripts
 
 COPY . .
@@ -14,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # release includes bare minimum required to run the app, copied from builder
-FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION}
+FROM base
 
 WORKDIR /app
 

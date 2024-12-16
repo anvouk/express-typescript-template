@@ -54,7 +54,7 @@ async function shutdownHook() {
       });
     });
   } catch (err) {
-    logger.warn({ error: err }, 'server closed with errors');
+    logger.warn(err, 'server closed with errors');
   } finally {
     redisClient.disconnect();
   }
