@@ -1,9 +1,9 @@
 import pino from 'pino';
-import { LOG_LEVEL } from './constants';
+import settings from './settings';
 
 const root = pino(
   {
-    level: LOG_LEVEL,
+    level: settings.LOG_LEVEL,
     enabled: process.env.NODE_ENV !== 'test',
   },
   pino.destination({

@@ -1,0 +1,20 @@
+FROM oven/bun:1.2-alpine AS builder
+
+WORKDIR /build
+COPY package.json bun.lock tsconfig.json ./
+
+RUN bun install
+
+COPY . .
+
+RUN bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile /tmp/app
+
+FROM alpine:3
+
+RUN apk add --no-cache libstdc++
+
+WORKDIR /app
+
+COPY --from=builder /tmp/app .
+
+CMD ["/app/app"]

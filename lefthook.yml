@@ -1,0 +1,6 @@
+pre-commit:
+  parallel: false
+  jobs:
+    - run: ./node_modules/prettier/bin/prettier.cjs -w {staged_files}
+      glob: "*.{js,ts}"
+      stage_fixed: true

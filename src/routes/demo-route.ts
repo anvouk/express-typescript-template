@@ -1,24 +1,20 @@
 import express, { NextFunction, Request } from 'express';
 import demoController from '../controllers/demo-controller';
-import { validatedBody } from '../middlewares/validation';
-import { body } from 'express-validator';
+import z from 'zod';
 
 const router = express.Router();
 
-interface ReqDemoRouteBody {
-  name: string;
-}
+const ReqDemoRouteBodySchema = z.strictObject({
+  name: z.string().nonempty(),
+});
+type ReqDemoRouteBody = z.infer<typeof ReqDemoRouteBodySchema>;
 
-router.post(
-  '/',
-  body('name').notEmpty().withMessage('value is null').isString().withMessage('value is not a string'),
-  async (req: Request, res: any, next: NextFunction) => {
-    const body = validatedBody<ReqDemoRouteBody>(req);
+router.post('/', async (req: Request, res: any, next: NextFunction) => {
+  const body: ReqDemoRouteBody = ReqDemoRouteBodySchema.parse(req.body);
 
-    return res.status(200).json({
-      greetings: await demoController.greetings(body.name),
-    });
-  },
-);
+  return res.status(200).json({
+    greetings: await demoController.greetings(body.name),
+  });
+});
 
 export default router;
