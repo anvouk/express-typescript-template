@@ -3,6 +3,7 @@
 .idea
 .vscode
 .env*
+.husky
 
 .DS_Store
 .AppleDouble
