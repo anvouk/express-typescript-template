@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { ValidationError } from 'express-validator';
 import { createSubLogger } from '../logger';
+import z from 'zod';
 
 const logger = createSubLogger('httpError');
 
@@ -31,12 +31,6 @@ export class HttpBadRequest extends HttpError {
   }
 }
 
-export class HttpValidationError extends HttpError {
-  constructor(public readonly errors: ValidationError[]) {
-    super('validation failed', 422);
-  }
-}
-
 export class HttpResourceNotFound extends HttpError {
   constructor(message: string) {
     super(message, 404);
@@ -59,17 +53,28 @@ export function endpointNotFound(req: Request, res: Response) {
 }
 
 export function errorHandler(err: any, req: Request, res: any, next: NextFunction) {
+  // handle partial message already sent error with default handler
+  if (res.headersSent) {
+    logger.error(err, 'partial error handling');
+    return next(err);
+  }
+
+  if (err instanceof z.ZodError) {
+    return res.status(400).json({
+      error: {
+        message: 'validation error',
+        status: 400,
+        issues: process.env.NODE_ENV !== 'production' ? err.issues : undefined,
+      },
+    });
+  }
+
   const statusCode = err.status || 500;
   let errorMsg = err.message || 'Internal Server Error';
   if (statusCode === 500) {
     logger.error(err, { errorMsg, statusCode });
   } else {
     logger.warn(err, { errorMsg, statusCode });
-  }
-
-  // handle partial message already sent error with default handler
-  if (res.headersSent) {
-    return next(err);
   }
 
   // obscure error messages in prod.
@@ -81,7 +86,6 @@ export function errorHandler(err: any, req: Request, res: any, next: NextFunctio
     error: {
       message: errorMsg,
       status: statusCode,
-      errors: err?.errors, // for validation errors only
     },
   });
 }
