@@ -1,13 +1,13 @@
 import IORedis from 'ioredis';
 import { createSubLogger } from '../logger';
-import { APP_NAME, REDIS_HOST, REDIS_PORT } from '../constants';
+import settings from '../settings';
 
 const logger = createSubLogger('redis');
 
 const redisClient: IORedis = new IORedis({
-  host: REDIS_HOST,
-  port: REDIS_PORT,
-  connectionName: APP_NAME,
+  host: settings.REDIS_HOST,
+  port: settings.REDIS_PORT,
+  connectionName: 'demo-server',
   lazyConnect: true,
 });
 

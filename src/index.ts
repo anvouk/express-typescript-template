@@ -1,4 +1,4 @@
-import { SERVER_PORT } from './constants';
+import settings from './settings';
 import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -19,7 +19,10 @@ app.use(express.json());
 
 if (process.env.NODE_ENV !== 'test') {
   if (process.env.NODE_ENV === 'production') {
-    morgan.format('combined-with-timings', ':remote-addr [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] - :response-time ms');
+    morgan.format(
+      'combined-with-timings',
+      ':remote-addr [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] - :response-time ms',
+    );
     app.use(morgan('combined-with-timings'));
   } else {
     app.use(morgan('dev'));
@@ -32,11 +35,11 @@ app.use(endpointNotFound);
 app.use(errorHandler);
 
 const server = createServer(app);
-server.listen(SERVER_PORT, async () => {
+server.listen(settings.SERVER_PORT, async () => {
   if (process.env.NODE_ENV === 'production') {
-    logger.info(`server listening on port: ${SERVER_PORT}`);
+    logger.info(`server listening on port: ${settings.SERVER_PORT}`);
   } else {
-    logger.info(`development server listening at http://localhost:${SERVER_PORT}`);
+    logger.info(`development server listening at http://localhost:${settings.SERVER_PORT}`);
   }
 });
 
