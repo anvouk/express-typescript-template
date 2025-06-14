@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import pino from 'pino';
-import z from 'zod';
-import * as process from 'node:process';
+import z from 'zod/v4';
 
 dotenv.config();
 
