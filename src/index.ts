@@ -18,16 +18,13 @@ app.use(helmet());
 app.use(express.json());
 
 if (process.env.NODE_ENV !== 'test') {
-  app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
+  if (process.env.NODE_ENV === 'production') {
+    morgan.format('combined-with-timings', ':remote-addr [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] - :response-time ms');
+    app.use(morgan('combined-with-timings'));
+  } else {
+    app.use(morgan('dev'));
+  }
 }
-
-app.get('/', (req, res) => {
-  res.json({
-    app: process.env.npm_package_name,
-    apiVersion: process.env.npm_package_version,
-    env: process.env.NODE_ENV,
-  });
-});
 
 app.use('/api/v1/demo', authGuard, demoRoute);
 
